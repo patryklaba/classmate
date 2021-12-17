@@ -1,33 +1,49 @@
-import React from 'react';
-import { users } from 'data/users.js';
+import React, { useState, useEffect } from 'react';
+import { users as usersData } from 'data/users.js';
 import UserListItem from '../../molecules/UserListItem/UserListItem';
-import styled from 'styled-components';
+import { Wrapper, StyledList } from 'components/organisms/UsersList/UsersList.styles';
 
-const Wrapper = styled.div`
-  background-color: white;
-  width: 100%;
-  max-width: 500px;
-  padding: 30px 42px;
-  border-radius: 25px;
-  box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.3);
-`;
+const mockAPI = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (usersData) {
+        resolve([...usersData]);
+      } else {
+        reject({ message: 'Error' });
+      }
+    }, 2000);
+  });
+};
 
-const StyledList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
+const UsersList = () => {
+  const [users, setUsers] = useState([]);
+  const [isLoading, setLoadingState] = useState(false);
 
-function UsersList(props) {
+  const deleteUser = (name) => {
+    const filteredUsers = users.filter((user) => user.name !== name);
+    setUsers(filteredUsers);
+  };
+
+  useEffect(() => {
+    setLoadingState(true);
+    mockAPI()
+      .then((data) => {
+        setUsers(data);
+        setLoadingState(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <Wrapper>
+      <h1>{isLoading ? 'Loading...' : 'Users list:'}</h1>
       <StyledList>
-        {users.map((userData) => (
-          <UserListItem key={userData.name} user={userData} />
+        {users.map((userDetails) => (
+          <UserListItem deleteUser={deleteUser} key={userDetails.name} user={userDetails} />
         ))}
       </StyledList>
     </Wrapper>
   );
-}
+};
 
 export default UsersList;

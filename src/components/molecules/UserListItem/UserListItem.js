@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Wrapper, StudentsAverage, StudentsDetails } from './UserListItem.styles';
-import StyledButton from '../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
-function UserListItem({ user: { name, attendance = '0%', average } }) {
+function UserListItem({ deleteUser, user: { name, attendance = '0%', average } }) {
   return (
     <Wrapper>
       <StudentsAverage value={average}>{average}</StudentsAverage>
@@ -11,7 +11,7 @@ function UserListItem({ user: { name, attendance = '0%', average } }) {
         <p>{name}</p>
         <p>attendance: {attendance}</p>
       </StudentsDetails>
-      <StyledButton />
+      <Button onClick={() => deleteUser(name)} />
     </Wrapper>
   );
 }

@@ -12,6 +12,7 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   svg {
     width: 100%;
@@ -19,8 +20,8 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = () => (
-  <StyledButton>
+const Button = (props) => (
+  <StyledButton {...props}>
     <DeleteIcon />
   </StyledButton>
 );
