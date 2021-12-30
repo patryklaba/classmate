@@ -10,7 +10,10 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
+        background-color: ${({ theme }) => theme.colors.lightGrey};
         font-family: 'Montserrat', sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
     a, button {
