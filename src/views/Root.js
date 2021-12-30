@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
-import UsersList from '../components/organisms/UsersList/UsersList';
 import { users as userData } from 'data/users.js';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/globalStyle';
 import { theme } from 'assets/styles/theme';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import AddUserForm from 'components/organisms/AddUserForm/AddUserForm';
-
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.lightGrey};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-`;
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AddUser from 'views/AddUser';
+import MainPageLayout from 'components/templates/MainPageLayout/MainPageLayout';
+import Dashboard from './Dashboard';
 
 const initialFormState = {
   name: '',
@@ -54,19 +46,15 @@ const Root = () => {
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Wrapper>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/add-user">Add user</Link>
-          </nav>
-          <Routes>
-            <Route path="/" element={<UsersList users={users} deleteUser={deleteUser} />} />
+        <Routes>
+          <Route path="/" element={<MainPageLayout />}>
+            <Route index element={<Dashboard users={users} deleteUser={deleteUser} />} />
             <Route
               path="/add-user"
-              element={<AddUserForm formValues={formValues} handleInputChange={handleInputChange} handleAddUser={handleAddUser} />}
+              element={<AddUser formValues={formValues} handleInputChange={handleInputChange} handleAddUser={handleAddUser} />}
             />
-          </Routes>
-        </Wrapper>
+          </Route>
+        </Routes>
       </ThemeProvider>
     </Router>
   );
