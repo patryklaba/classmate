@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import UserListItem from '../../molecules/UserListItem/UserListItem';
 import { StyledList } from 'components/organisms/UsersList/UsersList.styles';
 import Title from 'components/atoms/Title/Title';

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UsersContext } from './Root';
 import PropTypes from 'prop-types';
 import { UserShape } from 'types';
 import { ContentWrapper } from 'components/atoms/ContentWrapper/ContentWrapper';
 import UsersList from 'components/organisms/UsersList/UsersList';
 
-const Dashboard = ({ users, deleteUser }) => {
+const Dashboard = () => {
+  const context = useContext(UsersContext);
+
   return (
     <ContentWrapper>
-      <UsersList users={users} deleteUser={deleteUser} />
+      <UsersList users={context.users} deleteUser={context.deleteUser} />
     </ContentWrapper>
   );
 };
