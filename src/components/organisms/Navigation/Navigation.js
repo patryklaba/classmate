@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Wrapper, Logo, StyledLink } from './Navigation.styles';
 
 const Navigation = () => {
@@ -14,8 +13,8 @@ const Navigation = () => {
       </Logo>
       <StyledLink to="/">Dashboard</StyledLink>
       <StyledLink to="/add-user">Add user</StyledLink>
-      <StyledLink to="/">Settings</StyledLink>
-      <StyledLink to="/">Logout</StyledLink>
+      {/* <StyledLink to="/">Settings</StyledLink>
+      <StyledLink to="/">Logout</StyledLink> */}
     </Wrapper>
   );
 };

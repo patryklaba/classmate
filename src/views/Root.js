@@ -8,33 +8,23 @@ import AddUser from 'views/AddUser';
 import MainPageLayout from 'components/templates/MainPageLayout/MainPageLayout';
 import Dashboard from './Dashboard';
 
-const initialFormState = {
-  name: '',
-  attendance: '',
-  average: '',
-};
+export const UsersContext = React.createContext({
+  users: [],
+  handleAddUser: () => {},
+  deleteUser: () => {},
+});
 
 const Root = () => {
   const [users, setUsers] = useState(userData);
-  const [formValues, setFormValues] = useState(initialFormState);
 
-  const handleInputChange = (e) => {
-    setFormValues({
-      ...formValues,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleAddUser = (e) => {
-    e.preventDefault();
+  const handleAddUser = (values) => {
     const newUser = {
-      name: formValues.name,
-      attendance: formValues.attendance,
-      average: formValues.average,
+      name: values.name,
+      attendance: values.attendance,
+      average: values.average,
     };
 
     setUsers([newUser, ...users]);
-    setFormValues(initialFormState);
   };
 
   const deleteUser = (name) => {
@@ -46,15 +36,20 @@ const Root = () => {
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Routes>
-          <Route path="/" element={<MainPageLayout />}>
-            <Route index element={<Dashboard users={users} deleteUser={deleteUser} />} />
-            <Route
-              path="/add-user"
-              element={<AddUser formValues={formValues} handleInputChange={handleInputChange} handleAddUser={handleAddUser} />}
-            />
-          </Route>
-        </Routes>
+        <UsersContext.Provider
+          value={{
+            users,
+            handleAddUser,
+            deleteUser,
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<MainPageLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="/add-user" element={<AddUser />} />
+            </Route>
+          </Routes>
+        </UsersContext.Provider>
       </ThemeProvider>
     </Router>
   );
